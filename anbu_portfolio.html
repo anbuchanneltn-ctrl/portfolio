@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anbu — Web Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF7F2;--warm:#5C3D2E;--terra:#C4714A;--sand:#E8DDD0;
+  --green:#7A9E7E;--text:#2C1810;--muted:#8A7060;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;background:rgba(250,247,242,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--sand)}
+.logo{font-family:'Lora',serif;font-size:1.3rem;color:var(--warm);letter-spacing:0.02em}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:0.9rem;font-weight:400;transition:color 0.2s}
+.nav-links a:hover{color:var(--terra)}
+.nav-cta{background:var(--terra);color:#fff;padding:0.5rem 1.2rem;border-radius:50px;text-decoration:none;font-size:0.9rem;font-weight:500;transition:background 0.2s}
+.nav-cta:hover{background:var(--warm)}
+
+.hero{min-height:100vh;display:flex;align-items:center;padding:6rem 3rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(196,113,74,0.12),transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-60px;left:-80px;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(122,158,126,0.12),transparent 70%);pointer-events:none}
+.hero-inner{max-width:700px;animation:fadeUp 0.9s ease both}
+.hero-tag{display:inline-block;background:var(--sand);color:var(--terra);font-size:0.8rem;font-weight:500;letter-spacing:0.08em;padding:0.4rem 1rem;border-radius:50px;margin-bottom:1.5rem;text-transform:uppercase}
+.hero h1{font-family:'Lora',serif;font-size:clamp(2.5rem,6vw,4rem);line-height:1.15;color:var(--warm);margin-bottom:1.2rem}
+.hero h1 em{color:var(--terra);font-style:italic}
+.hero p{font-size:1.15rem;color:var(--muted);line-height:1.75;max-width:520px;margin-bottom:2rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--terra);color:#fff;padding:0.75rem 1.8rem;border-radius:50px;text-decoration:none;font-weight:500;transition:background 0.2s,transform 0.15s}
+.btn-primary:hover{background:var(--warm);transform:translateY(-2px)}
+.btn-secondary{border:1.5px solid var(--sand);color:var(--warm);padding:0.75rem 1.8rem;border-radius:50px;text-decoration:none;font-weight:500;transition:border-color 0.2s,transform 0.15s}
+.btn-secondary:hover{border-color:var(--terra);transform:translateY(-2px)}
+
+.section{padding:5rem 3rem;max-width:1100px;margin:0 auto}
+.section-label{font-size:0.78rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--terra);margin-bottom:0.8rem}
+.section h2{font-family:'Lora',serif;font-size:clamp(1.8rem,4vw,2.5rem);color:var(--warm);margin-bottom:1.5rem;line-height:1.2}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1rem;font-size:1rem}
+.about-card{background:#fff;border:1px solid var(--sand);border-radius:20px;padding:2rem;display:flex;flex-direction:column;gap:1.2rem}
+.about-stat{display:flex;align-items:center;gap:1rem}
+.stat-icon{width:44px;height:44px;border-radius:12px;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.stat-label{font-size:0.82rem;color:var(--muted)}
+.stat-value{font-family:'Lora',serif;font-size:1.1rem;color:var(--warm);font-weight:600}
+
+.services-bg{background:#fff;padding:5rem 0}
+.services-inner{max-width:1100px;margin:0 auto;padding:0 3rem}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2.5rem}
+.service-card{background:var(--cream);border:1px solid var(--sand);border-radius:20px;padding:1.8rem;transition:transform 0.2s,box-shadow 0.2s}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(92,61,46,0.08)}
+.service-icon{font-size:2rem;margin-bottom:1rem}
+.service-card h3{font-family:'Lora',serif;font-size:1.15rem;color:var(--warm);margin-bottom:0.6rem}
+.service-card p{font-size:0.9rem;color:var(--muted);line-height:1.7}
+.service-price{margin-top:1rem;font-size:1rem;font-weight:600;color:var(--terra)}
+
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:2.5rem}
+.project-card{background:#fff;border:1px solid var(--sand);border-radius:20px;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s}
+.project-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(92,61,46,0.08)}
+.project-thumb{height:160px;display:flex;align-items:center;justify-content:center;font-size:3rem}
+.thumb-1{background:linear-gradient(135deg,#f5e6d3,#e8c9a8)}
+.thumb-2{background:linear-gradient(135deg,#d3e8d3,#a8c9a8)}
+.thumb-3{background:linear-gradient(135deg,#d3d8e8,#a8b0c9)}
+.project-info{padding:1.5rem}
+.project-info h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--warm);margin-bottom:0.4rem}
+.project-info p{font-size:0.88rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.project-tags{display:flex;flex-wrap:wrap;gap:0.4rem}
+.tag{background:var(--sand);color:var(--warm);font-size:0.75rem;padding:0.25rem 0.65rem;border-radius:50px;font-weight:500}
+
+.contact-bg{background:var(--warm);padding:5rem 3rem;text-align:center;position:relative;overflow:hidden}
+.contact-bg::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.contact-bg h2{font-family:'Lora',serif;font-size:clamp(2rem,5vw,3rem);color:var(--cream);margin-bottom:1rem}
+.contact-bg p{color:rgba(250,247,242,0.7);max-width:480px;margin:0 auto 2rem;line-height:1.75;font-size:1rem}
+.contact-info{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.contact-item{color:rgba(250,247,242,0.9);font-size:0.95rem}
+.contact-item span{display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(250,247,242,0.45);margin-bottom:0.3rem}
+.contact-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.btn-light{background:var(--cream);color:var(--warm);padding:0.75rem 1.8rem;border-radius:50px;text-decoration:none;font-weight:500;transition:background 0.2s}
+.btn-light:hover{background:var(--sand)}
+.btn-outline-light{border:1.5px solid rgba(250,247,242,0.4);color:var(--cream);padding:0.75rem 1.8rem;border-radius:50px;text-decoration:none;font-weight:500;transition:border-color 0.2s}
+.btn-outline-light:hover{border-color:rgba(250,247,242,0.9)}
+
+footer{text-align:center;padding:2rem;font-size:0.85rem;color:var(--muted);background:var(--cream);border-top:1px solid var(--sand)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-in.visible{opacity:1;transform:none}
+
+@media(max-width:640px){
+  nav{padding:1rem 1.5rem}.nav-links{display:none}
+  .hero,.section{padding-left:1.5rem;padding-right:1.5rem}
+  .about-grid{grid-template-columns:1fr}
+  .services-inner{padding:0 1.5rem}
+  .contact-bg{padding:4rem 1.5rem}
+  .contact-info{gap:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Anbu</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">Web Developer for Hire</span>
+    <h1>I build websites<br>people <em>love to use.</em></h1>
+    <p>Hi, I'm Anbu — a passionate web developer who crafts clean, fast, and beautiful websites tailored to your needs. Affordable prices, quality results. Let's bring your vision to life.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Work with me</a>
+      <a href="#projects" class="btn-secondary">See my work</a>
+    </div>
+  </div>
+</section>
+
+<section class="section fade-in" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-label">About Me</div>
+      <h2>A developer who cares about your goals</h2>
+      <p>I'm Anbu, a web developer based in India. I work closely with clients to understand what they truly need — and then build it with care, clean code, and attention to detail.</p>
+      <p>Every website I build is custom-crafted, responsive, and delivered on time. Your success is my priority — at a price that won't break the bank.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-stat">
+        <div class="stat-icon">🌐</div>
+        <div>
+          <div class="stat-value">20+ Websites</div>
+          <div class="stat-label">Delivered to happy clients</div>
+        </div>
+      </div>
+      <div class="about-stat">
+        <div class="stat-icon">⚡</div>
+        <div>
+          <div class="stat-value">Fast Turnaround</div>
+          <div class="stat-label">Quick delivery without cutting corners</div>
+        </div>
+      </div>
+      <div class="about-stat">
+        <div class="stat-icon">💬</div>
+        <div>
+          <div class="stat-value">Always Reachable</div>
+          <div class="stat-label">Open communication throughout</div>
+        </div>
+      </div>
+      <div class="about-stat">
+        <div class="stat-icon">📱</div>
+        <div>
+          <div class="stat-value">Mobile-First</div>
+          <div class="stat-label">Looks great on every device</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="services-bg fade-in" id="services">
+  <div class="services-inner">
+    <div class="section-label">Services & Pricing</div>
+    <h2>What I offer</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏠</div>
+        <h3>Landing Pages</h3>
+        <p>Eye-catching single pages that convert visitors into customers. Great for businesses, products, and events.</p>
+        <div class="service-price">₹500 – ₹1,500</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏢</div>
+        <h3>Business Websites</h3>
+        <p>Multi-page professional websites with all the sections your business needs to shine online.</p>
+        <div class="service-price">₹1,000 – ₹1,500</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>Portfolio & Blogs</h3>
+        <p>Showcase your work, share your thoughts, and build your personal brand with a beautiful portfolio site.</p>
+        <div class="service-price">₹300 – ₹600</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section fade-in" id="projects">
+  <div class="section-label">Projects</div>
+  <h2>Recent work</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-thumb thumb-1">☕</div>
+      <div class="project-info">
+        <h3>Café Aroma</h3>
+        <p>A warm landing page for a local café, featuring their menu, gallery, and contact form.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb thumb-2">🌿</div>
+      <div class="project-info">
+        <h3>GreenLeaf Store</h3>
+        <p>An online plant shop with product listings and a fresh green aesthetic.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb thumb-3">📚</div>
+      <div class="project-info">
+        <h3>Tutor Hub</h3>
+        <p>A tutoring services website with class schedules, instructor bios, and a booking form.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contact-bg fade-in" id="contact">
+  <h2>Ready to build your website?</h2>
+  <p>Let's talk about your project. I'll give you a fair quote and get started quickly.</p>
+  <div class="contact-info">
+    <div class="contact-item">
+      <span>Email</span>
+      localgrow13@gmail.com
+    </div>
+    <div class="contact-item">
+      <span>Phone / WhatsApp</span>
+      +91 99520 62026
+    </div>
+  </div>
+  <div class="contact-btns">
+    <a href="mailto:localgrow13@gmail.com" class="btn-light">📧 Email me</a>
+    <a href="https://wa.me/919952062026" class="btn-outline-light">💬 WhatsApp me</a>
+  </div>
+</div>
+
+<footer>
+  © 2026 Anbu · Web Developer · Made with ❤️ in India · localgrow13@gmail.com · +91 99520 62026
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
